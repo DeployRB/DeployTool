@@ -14,7 +14,7 @@ GEM
       deep_merge (~> 1.0.0)
     deep_merge (1.0.1)
     i18n (0.7.0)
-    json (1.8.3)
+    json (1.8.6)
     method_source (0.8.2)
     minitest (5.8.4)
     pry (0.10.3)
@@ -35,4 +35,4 @@ DEPENDENCIES
   pry
 
 BUNDLED WITH
-   1.11.2
+   1.16.0
