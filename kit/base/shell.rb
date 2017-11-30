@@ -7,6 +7,10 @@ class DeployKit
     config.ssh.user.deployer
   end
 
+  def scp(cmd)
+    "scp -o 'ForwardAgent=yes' -i #{ config.ssh.user.deployer.key } #{ cmd }"
+  end
+
   def shell cmds = nil
     to_exec = cmds_to_ary(cmds)
     to_exec = cmds_prepare(to_exec)

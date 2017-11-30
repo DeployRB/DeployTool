@@ -46,7 +46,7 @@ class DeployKit
     remote_file = "#{ remote_db_dumps_path }/#{ file_name }"
 
     ssh_addr = "#{ config.ssh.user.deployer.login }@#{ config.ssh.user.deployer.domain }"
-    copy_cmd = "scp #{ ssh_addr }:#{ remote_file } #{ local_file }"
+    copy_cmd = scp("#{ ssh_addr }:#{ remote_file } #{ local_file }")
     local_exec copy_cmd
 
     puts "POSTGRES: pg_restore -h #{ host } -d #{ db_name } -U #{ db_user } #{ local_file }".green
@@ -75,7 +75,7 @@ class DeployKit
     remote_file = "#{ remote_db_dumps_path }/#{ file_name }"
 
     ssh_addr = "#{ config.ssh.user.deployer.login }@#{ config.ssh.user.deployer.domain }"
-    copy_cmd = "scp #{ ssh_addr }:#{ remote_file } #{ local_file }"
+    copy_cmd = scp("#{ ssh_addr }:#{ remote_file } #{ local_file }")
     local_exec copy_cmd
 
     puts "MYSQL: mysql -u LOCAL_BD_USER -pPASSWORD123 LOCAL_DB_NAME < #{ local_file }"
