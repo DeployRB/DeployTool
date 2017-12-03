@@ -37,22 +37,20 @@ bundle install
 ### 2. Copy templates & config files
 
 ```sh
-cp -Rv __TEMPLATES__/production.example __TEMPLATES__/production
-
 cp -Rv __ENV__/production.example __ENV__/production
 ```
 
 ### 3. Set up access parameters in `server_access.yml` config file
 
-EDIT: `__ENV__/production/server_access.yml`
+EDIT: `__ENV__/production/__SETTINGS__/server_access.yml`
 
 ### 4. Check and Edit important templates & config files
 
-EDIT: `__ENV__/production/database.yml`
+EDIT: `__ENV__/production/__SETTINGS__/database.yml`
 
-EDIT: `__ENV__/production/deploy_params.yml`
+EDIT: `__ENV__/production/__SETTINGS__/deploy_params.yml`
 
-EDIT: `__TEMPLATES__/production/settings/app.yml`
+EDIT: `__ENV__/production/__TEMPLATES__/settings/app.yml`
 
 ### 5. Deploy!
 
