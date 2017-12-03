@@ -1,10 +1,10 @@
 class DeployKit
   def kit_templates_path
-    '__TEMPLATES__'
+    "__ENV__/#{ app_env }/__TEMPLATES__"
   end
 
   def kit_configs_path
-    '__ENV__'
+    "__ENV__/#{ app_env }/__SETTINGS__"
   end
 
   # COMMON PATHS
