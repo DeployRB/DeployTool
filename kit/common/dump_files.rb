@@ -20,7 +20,7 @@ class DeployKit
 
       local_exec [
         "mkdir -p #{ to }",
-        "rsync -chavzPr #{ from } #{ to }"
+        rsync("-chavzPr #{ from } #{ to }")
       ]
     end
   end

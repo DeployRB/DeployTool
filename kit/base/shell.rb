@@ -11,6 +11,11 @@ class DeployKit
     "scp -o 'ForwardAgent=yes' -i #{ config.ssh.user.deployer.key } #{ cmd }"
   end
 
+  def rsync(cmd)
+    ssh_opt = "-e 'ssh -i #{ config.ssh.user.deployer.key }'" if config.ssh.user.deployer.key
+    "rsync #{ ssh_opt } #{ cmd }"
+  end
+
   def shell cmds = nil
     to_exec = cmds_to_ary(cmds)
     to_exec = cmds_prepare(to_exec)
