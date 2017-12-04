@@ -148,27 +148,28 @@ This project uses really simple approaches and code base. You can learn how it w
 
 ```ruby
 ├── __ENV__
-│   ├── production
-│   │   ├── database.yml
-│   │   ├── deploy_params.yml
-│   │   └── ssh_ssl.yml
-├── __TEMPLATES__
-│   ├── production
-│   │   ├── database.yml
-│   │   ├── services
-│   │   ├── settings
-│   │   └── ssh_ssl
+│  ├── production
+│  │  ├── __SETTINGS__
+│  │  │  ├── database.yml
+│  │  │  ├── deploy_params.yml
+│  │  │  └── ssh_ssl.yml
+│  │  ├── __TEMPLATES__
+│  │  │  ├── database.yml
+│  │  │  ├── services/*
+│  │  │  ├── settings/*
+│  │  │  └── ssh_ssl/*
 ├── deploy.rb
 └── kit
-    ├── base
-    ├── common
-    ├── custom
-    ├── kit.rb
-    └── rails
+    ├── base/*
+    ├── common/*
+    ├── custom/*
+    ├── rails/*
+    └── kit.rb
 ```
 
 * `deploy.rb` main entry point of Deploy Tool
-* `__ENV__` Settings for Deploy Tool for a specific Environment
+* `__ENV__` Folder for keeping Settings snd Templates for a specific environment
+* `__SETTINGS__` Settings for the Deploy Tool
 * `__TEMPLATES__` Templates to configure external services (DB (database.yml), Redis, Sidekiq, Thinkig Sphinx, etc.)
 * `kit` folder with methods to provide a deployment process
 * `kit/base` common methods to provide a deployment process
