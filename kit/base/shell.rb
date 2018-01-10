@@ -43,31 +43,24 @@ class DeployKit
     local_exec cmds
   end
 
-  def remote_exec cmds
+  def remote_exec cmds, as = nil
+    user_name = as ? as.to_s : 'deployer'
+    user = config.ssh.user[user_name]
+
     shell cmds do |cmds|
       to_exec = <<-EOS
         ssh
         -t
         -o "ForwardAgent=yes"
-        -i #{ config.ssh.user.deployer.key }
-        -l #{ config.ssh.user.deployer.login }
-        #{ config.ssh.user.deployer.domain }
+        -i #{ user.key }
+        -l #{ user.login }
+        #{ user.domain }
         "/bin/bash -l -c '#{ cmds }'"
       EOS
     end
   end
 
   def sudo_remote_exec cmds
-    shell cmds do |cmds|
-      to_exec = <<-EOS
-        ssh
-        -t
-        -o "ForwardAgent=yes"
-        -i #{ config.ssh.user.sudo.key }
-        -l #{ config.ssh.user.sudo.login }
-        #{ config.ssh.user.sudo.domain }
-        "/bin/bash -l -c '#{ cmds }'"
-      EOS
-    end
+    remote_exec(cmds, :sudo)
   end
 end

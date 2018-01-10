@@ -1,12 +1,25 @@
 class DeployKit
+  def startup_authorize_sudo
+    startup_authorize(:sudo)
+  end
+
   def startup_authorize_deployer
-    puts "YOUR PASS: #{ deployer.password }".red
-    remote_exec "mkdir -p ~/.ssh/"
+    startup_authorize(:deployer)
+  end
+
+  def startup_authorize(user_name)
+    deploy_user = config.ssh.user[user_name]
+
+    puts "YOUR PASS: #{ deploy_user.password }".red
+    remote_exec("mkdir -p ~/.ssh/", user_name)
 
     auth_keys = '~/.ssh/authorized_keys'
 
-    unless remote_file_exists?(auth_keys)
-      local_exec  "cat #{ deployer.key_pub } | ssh #{ deployer.login }@#{ deployer.domain } 'cat > #{ auth_keys }'"
+    unless remote_file_exists?(auth_keys, user_name)
+      local_exec "cat #{ deploy_user.key_pub } | ssh #{ deploy_user.login }@#{ deploy_user.domain } 'cat > #{ auth_keys }'"
+      puts "#{auth_keys} file was initialized on the server".light_green
+    else
+      puts "#{auth_keys} file is already exists on the server".light_red
     end
   end
 

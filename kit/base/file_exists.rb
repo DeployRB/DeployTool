@@ -8,8 +8,9 @@ class DeployKit
     res.strip == 'true'
   end
 
-  def remote_file_exists?(file_path)
-    res = remote_exec file_exists?(file_path)
+  def remote_file_exists?(file_path, as = nil)
+    cmd = file_exists?(file_path)
+    res = remote_exec(cmd, as)
     res.strip == 'true'
   end
 end
