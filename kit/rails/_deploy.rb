@@ -44,6 +44,7 @@ class DeployKit
     ts_config
     ts_index
     ts_restart
+
     cron_restart
 
     app_release_info
