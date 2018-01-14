@@ -49,7 +49,7 @@ class DeployKit
     copy_cmd = scp("#{ ssh_addr }:#{ remote_file } #{ local_file }")
     local_exec copy_cmd
 
-    puts "POSTGRES: pg_restore -h #{ host } -d #{ db_name } -U #{ db_user } #{ local_file }".green
+    db_dump_psql_manual(local_file)
   end
 
   def dump_db_mysql
@@ -78,7 +78,33 @@ class DeployKit
     copy_cmd = scp("#{ ssh_addr }:#{ remote_file } #{ local_file }")
     local_exec copy_cmd
 
-    puts "MYSQL: mysql -u LOCAL_BD_USER -pPASSWORD123 LOCAL_DB_NAME < #{ local_file }"
+    db_dump_mysql_manual(local_file)
+  end
+
+  def db_dump_mysql_manual(local_file = nil)
+    port    = config.db.port || '5432'
+    host    = config.db.host
+    db_user = config.db.username
+    pass    = config.db.password
+    db_name = config.db.database
+
+    file_name = db_local_file_name(:mysql)
+    local_file ||= "#{ local_db_dumps_path }/#{ file_name }"
+
+    puts "MYSQL: mysql -u LOCAL_BD_USER -pPASSWORD123 LOCAL_DB_NAME < #{ local_file }".green
+  end
+
+  def db_dump_psql_manual(local_file = nil)
+    port    = config.db.port || '5432'
+    host    = config.db.host
+    db_user = config.db.username
+    pass    = config.db.password
+    db_name = config.db.database
+
+    file_name = db_local_file_name(:pq)
+    local_file ||= "#{ local_db_dumps_path }/#{ file_name }"
+
+    puts "POSTGRES: pg_restore -h #{ host } -d #{ db_name } -U #{ db_user } #{ local_file }".green
   end
 
   def db_local_file_name(db_type)
